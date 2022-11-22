@@ -1,0 +1,62 @@
+# https://github.com/codebyhenry/dockerfiles/edit/main/lemp
+# https://linuxiac.com/how-to-set-up-lemp-stack-with-docker-compose/
+
+# in the $HOME folder or where you like the data to be
+# sudo mkdir -p lemp/{nginx-conf,php-files}
+
+
+version: '3.8'
+
+# Services
+services:
+
+    # PHP Service
+    php:
+        build:
+            dockerfile: php-dockerfile
+        volumes:
+            - './php-files:/var/www/html'
+        depends_on:
+            - mariadb
+
+    # Nginx Service
+    nginx:
+        image: nginx:latest
+        hostname: phpgame
+        environment:
+            VIRTUAL_HOST: http://phpgame.eems-pve.zapus-nessie.ts.net:12346
+
+        ports:
+            - 12346:80
+        links:
+            - 'php'
+        volumes:
+            - './php-files:/var/www/html'
+            - './nginx-conf:/etc/nginx/conf.d'
+        depends_on:
+            - php
+
+    # MariaDB Service (default user: root)
+    mariadb:
+        image: mariadb:10.9
+        environment:
+            MYSQL_ROOT_PASSWORD: yr_password_321
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_ROOT: root
+        volumes:
+            - mysqldata:/var/lib/mysql
+
+    # phpMyAdmin Service
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        ports:
+        # empty sets random free port or set hardcoded port
+            - :80
+        environment:
+            PMA_HOST: mariadb
+        depends_on:
+            - mariadb
+
+# Volumes
+volumes:
+  mysqldata:
