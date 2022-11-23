@@ -1,9 +1,5 @@
-# https://github.com/codebyhenry/dockerfiles/edit/main/lemp
+# https://github.com/codebyhenry/dockerfiles/blob/main/lemp
 # https://linuxiac.com/how-to-set-up-lemp-stack-with-docker-compose/
-
-# in the $HOME folder or where you like the data to be
-# sudo mkdir -p lemp/{nginx-conf,php-files}
-
 
 version: '3.8'
 
@@ -23,8 +19,8 @@ services:
     nginx:
         image: nginx:latest
         hostname: phpgame
-        environment:
-            VIRTUAL_HOST: http://phpgame.eems-pve.zapus-nessie.ts.net:12346
+# environment:
+#            VIRTUAL_HOST:
 
         ports:
             - 12346:80
