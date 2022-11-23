@@ -11,7 +11,7 @@ or fork it and run it on your own local
 [Github Codespaces](https://github.com/codespaces)
 
 ## TOC
-state: proof of concept,
-Unencrypted http// port: 12346
+state: proof of concept.  
+Unencrypted http// port: 12346   
 
 
